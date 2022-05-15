@@ -37,5 +37,6 @@ int printPassengerAverage(Passenger* arrayPassenger, int len, float averagePrice
 int calculateAverageAndPrint(Passenger* arrayPassenger, int len);
 int sortPassengersFlycodeAndStatusflight(Passenger* list, int len, int order);
 int cargaForzada(Passenger* list, int len, int* idPassenger);
+int printPassengerArrayStatusFlight(Passenger* list, int length);
 
 #endif /* ARRAYPASSENGER_H_ */

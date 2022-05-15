@@ -55,7 +55,7 @@ int addPassenger(Passenger* list, int len, int id, char name[],char lastName[],f
 		if(auxPosition >= 0)
 		{
 			retorno = 0;
-			list[auxPosition].id = id;
+			list[auxPosition].id = auxPosition;
 			strncpy(list[auxPosition].name,name,sizeof(list[auxPosition].name));
 			strncpy(list[auxPosition].lastName,lastName,sizeof(list[auxPosition].lastName));
 			list[auxPosition].price = price;
@@ -135,12 +135,13 @@ int sortPassengersNameAndType(Passenger* list, int len, int order)  {
 
 		if(list != NULL && len >0 && (order == 1 || order == 0))
 		{
+			retorno=0;
 			switch (order) {
 				case 1:
 					do
 					{
 						flagSwap = 0;
-						for(i=0;i<len;i++)
+						for(i=0;i<sizeof(list);i++)
 						{
 							auxiliarCmp = strncmp(list[i].lastName,list[i+1].lastName,sizeof(list[i].lastName));
 							if(auxiliarCmp > 0 ||
@@ -152,14 +153,14 @@ int sortPassengersNameAndType(Passenger* list, int len, int order)  {
 								list[i+1] = bufferPassenger;
 							}
 						}
-						len--;
+
 					}while(flagSwap);
 					break;
 				case 0:
 					do
 					{
 						flagSwap = 0;
-						for(i=0;i<len;i++)
+						for(i=0;i<sizeof(list);i++)
 						{
 							auxiliarCmp = strncmp(list[i].lastName,list[i+1].lastName,sizeof(list[i].lastName));
 							if(auxiliarCmp < 0 ||
@@ -171,7 +172,7 @@ int sortPassengersNameAndType(Passenger* list, int len, int order)  {
 								list[i+1] = bufferPassenger;
 							}
 						}
-						len--;
+
 					}while(flagSwap);
 					break;
 			}
@@ -350,10 +351,10 @@ int deletePassenger(Passenger* list, int len, int* idPassenger)
 	if(list != NULL && len > 0 && idPassenger != NULL)
 	{
 		printPassengerArray(list,len);
-		printf("*idPassenger %d",*idPassenger);
+
 		if(utn_getNumero(&index, "Ingrese ID del Pasajero a eliminar.\n", "[ERROR]ID Invalido.\n", 0,*idPassenger, 3)==0)
 		{
-			printf("%d",index);
+
 			if(list[index].isEmpty == 1)
 			{
 				retorno = 0;
@@ -408,7 +409,7 @@ int sortAndPrint(Passenger* list,int lenght)
 	int retorno = -1;
 	if(list!=NULL && lenght>=0)
 	{
-		//sortPassengersNameAndType(list, lenght, 1);
+		sortPassengersNameAndType(list, lenght, 1);
 
 		printPassengerArray(list, lenght);
 		retorno=0;
@@ -431,7 +432,7 @@ int sortAndPrintFlycode(Passenger* list,int lenght)
 	if(list!=NULL && lenght>=0)
 	{
 		sortPassengersFlycodeAndStatusflight(list, lenght, 1);
-		printPassengerArray(list, lenght);
+		printPassengerArrayStatusFlight(list, lenght);
 	}
 
 	return retorno;
@@ -508,12 +509,13 @@ int sortPassengersFlycodeAndStatusflight(Passenger* list, int len, int order)  {
 
 		if(list != NULL && len >0 && (order == 1 || order == 0))
 		{
+			retorno=0;
 			switch (order) {
 				case 1:
 					do
 					{
 						flagSwap = 0;
-						for(i=0;i<len;i++)
+						for(i=0;i<sizeof(list);i++)
 						{
 							auxiliarCmp = strncmp(list[i].flycode,list[i+1].flycode,sizeof(list[i].flycode));
 							if(auxiliarCmp > 0 ||
@@ -525,14 +527,14 @@ int sortPassengersFlycodeAndStatusflight(Passenger* list, int len, int order)  {
 								list[i+1] = bufferPassenger;
 							}
 						}
-						len--;
+
 					}while(flagSwap);
 					break;
 				case 0:
 					do
 					{
 						flagSwap = 0;
-						for(i=0;i<len;i++)
+						for(i=0;i<sizeof(list);i++)
 						{
 							auxiliarCmp = strncmp(list[i].flycode,list[i+1].flycode,sizeof(list[i].flycode));
 							if(auxiliarCmp < 0 ||
@@ -544,7 +546,7 @@ int sortPassengersFlycodeAndStatusflight(Passenger* list, int len, int order)  {
 								list[i+1] = bufferPassenger;
 							}
 						}
-						len--;
+
 					}while(flagSwap);
 					break;
 			}
@@ -562,34 +564,88 @@ int cargaForzada(Passenger* list, int len, int* idPassenger)
 	{
 
 
-
 			(*idPassenger)++;
-			strncpy(pasajeros[0].name,"Pepe",sizeof(pasajeros[0].name));
-			strncpy(pasajeros[0].lastName,"Gonzalez",sizeof(pasajeros[0].lastName));
-			pasajeros[0].price = 25450;
-			strncpy(pasajeros[0].flycode,"HDSZ24",sizeof(pasajeros[0].flycode));
-			pasajeros[0].typePassenger = 1;
-			pasajeros[0].statusFlight = 1;
-			pasajeros[0].isEmpty = 1;
-			if(addPassenger(list, len, *idPassenger, pasajeros[0].name,pasajeros[0].lastName,pasajeros[0].price,pasajeros[0].typePassenger,pasajeros[0].flycode,pasajeros[0].statusFlight)==0)
-			{
-				retorno = 0;
-			}
+						strncpy(pasajeros[0].name,"Pedro",sizeof(pasajeros[0].name));
+						strncpy(pasajeros[0].lastName,"Castro",sizeof(pasajeros[0].lastName));
+						pasajeros[0].price = 25450;
+						strncpy(pasajeros[0].flycode,"HDSZ24",sizeof(pasajeros[0].flycode));
+						pasajeros[0].typePassenger = 1;
+						pasajeros[0].statusFlight = 1;
+						pasajeros[0].isEmpty = 1;
+						if(addPassenger(list, len, *idPassenger, pasajeros[0].name,pasajeros[0].lastName,pasajeros[0].price,pasajeros[0].typePassenger,pasajeros[0].flycode,pasajeros[0].statusFlight)==0)
+						{
+							retorno = 0;
+						}
 
-			(*idPassenger)++;
-			strncpy(pasajeros[1].name,"asd",sizeof(pasajeros[1].name));
-			strncpy(pasajeros[1].lastName,"Gonzalez",sizeof(pasajeros[1].lastName));
-			pasajeros[1].price = 25450;
-			strncpy(pasajeros[1].flycode,"HDSZ24",sizeof(pasajeros[1].flycode));
-			pasajeros[1].typePassenger = 1;
-			pasajeros[1].statusFlight = 1;
-			pasajeros[1].isEmpty = 1;
-			if(addPassenger(list, len, *idPassenger, pasajeros[1].name,pasajeros[1].lastName,pasajeros[1].price,pasajeros[1].typePassenger,pasajeros[1].flycode,pasajeros[1].statusFlight)==0)
-			{
-				retorno = 0;
-			}
+						(*idPassenger)++;
+						strncpy(pasajeros[1].name,"Martin",sizeof(pasajeros[1].name));
+						strncpy(pasajeros[1].lastName,"Perez",sizeof(pasajeros[1].lastName));
+						pasajeros[1].price = 27840;
+						strncpy(pasajeros[1].flycode,"HZXWZ4",sizeof(pasajeros[1].flycode));
+						pasajeros[1].typePassenger = 3;
+						pasajeros[1].statusFlight = 1;
+						pasajeros[1].isEmpty = 1;
+						if(addPassenger(list, len, *idPassenger, pasajeros[1].name,pasajeros[1].lastName,pasajeros[1].price,pasajeros[1].typePassenger,pasajeros[1].flycode,pasajeros[1].statusFlight)==0)
+						{
+							retorno = 0;
+						}
+
+							(*idPassenger)++;
+						strncpy(pasajeros[2].name,"Camila",sizeof(pasajeros[2].name));
+						strncpy(pasajeros[2].lastName,"Formoso",sizeof(pasajeros[2].lastName));
+						pasajeros[2].price = 65823;
+						strncpy(pasajeros[2].flycode,"JK24GD",sizeof(pasajeros[2].flycode));
+						pasajeros[2].typePassenger = 2;
+						pasajeros[2].statusFlight = 2;
+						pasajeros[2].isEmpty = 1;
+						if(addPassenger(list, len, *idPassenger, pasajeros[2].name,pasajeros[2].lastName,pasajeros[2].price,pasajeros[2].typePassenger,pasajeros[2].flycode,pasajeros[2].statusFlight)==0)
+						{
+							retorno = 0;
+						}
+
+						(*idPassenger)++;
+						strncpy(pasajeros[3].name,"Hernesto",sizeof(pasajeros[3].name));
+						strncpy(pasajeros[3].lastName,"Gutierres",sizeof(pasajeros[3].lastName));
+						pasajeros[3].price = 46680;
+						strncpy(pasajeros[3].flycode,"Z22HJ4",sizeof(pasajeros[3].flycode));
+						pasajeros[3].typePassenger = 1;
+						pasajeros[3].statusFlight = 2;
+						pasajeros[3].isEmpty = 1;
+						if(addPassenger(list, len, *idPassenger, pasajeros[3].name,pasajeros[3].lastName,pasajeros[3].price,pasajeros[3].typePassenger,pasajeros[3].flycode,pasajeros[3].statusFlight)==0)
+						{
+							retorno = 0;
+						}
+
+							(*idPassenger)++;
+						strncpy(pasajeros[4].name,"Agustina",sizeof(pasajeros[4].name));
+						strncpy(pasajeros[4].lastName,"Formoso",sizeof(pasajeros[4].lastName));
+						pasajeros[4].price = 85260;
+						strncpy(pasajeros[4].flycode,"3TT6HJ",sizeof(pasajeros[4].flycode));
+						pasajeros[4].typePassenger = 3;
+						pasajeros[4].statusFlight = 1;
+						pasajeros[4].isEmpty = 1;
+						if(addPassenger(list, len, *idPassenger, pasajeros[4].name,pasajeros[4].lastName,pasajeros[4].price,pasajeros[4].typePassenger,pasajeros[4].flycode,pasajeros[4].statusFlight)==0)
+						{
+							retorno = 0;
+						}
+
 
 	}
 
 	return retorno;
+}
+
+
+int printPassengerArrayStatusFlight(Passenger* list, int length)  {
+	int retorno =-1;
+
+	if(list!=NULL && length>=0){
+		for(int i=0; i<length;i++){
+			if(list[i].statusFlight == 1)
+			{
+				printPassenger(&list[i]);
+			}
+		}
+	}
+return retorno;
 }
